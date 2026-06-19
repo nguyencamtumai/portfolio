@@ -795,7 +795,82 @@ section{padding:100px 60px}
   .hero-belief-intro{display:none}
   .hero-belief{line-height:1.7}
 }
+
+/* ═══ HERO — Luke Baffait inspired ═══ */
+#about{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-top:calc(var(--nav-h) + 40px);padding-bottom:48px;position:relative}
+.hero-name-lg{font-size:clamp(64px,11vw,148px);font-weight:300;line-height:0.92;letter-spacing:-0.03em;margin-bottom:20px}
+.hero-name-lg em{font-style:italic;color:var(--leaf);font-weight:300}
+.hero-name-lg .char{display:inline-block;will-change:transform,opacity}
+.hero-sub-lg{font-size:15px;font-weight:300;color:var(--gray);max-width:420px;line-height:1.75;margin-bottom:56px}
+.hero-meta-row{width:100%;max-width:560px;display:flex;justify-content:space-between;align-items:flex-end;padding-top:24px;border-top:1px solid var(--gray-bd)}
+.hero-meta-item{display:flex;flex-direction:column;gap:2px}
+.hero-meta-num{font-size:20px;font-weight:300;color:var(--leaf)}
+.hero-meta-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+.hero-scroll-hint{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);opacity:.55;writing-mode:vertical-rl;align-self:center}
+
+@media(max-width:640px){
+  .hero-name-lg{font-size:clamp(44px,15vw,72px)}
+  .hero-sub-lg{font-size:13px;margin-bottom:40px}
+  .hero-meta-row{flex-direction:row}
+  .hero-scroll-hint{writing-mode:horizontal-tb;align-self:center}
+}
+
+/* ═══ CASE CARD — Luke Baffait inspired (image-forward overlay) ═══ */
+.case-card{
+  background:none!important;border:none!important;box-shadow:none!important;
+  border-radius:18px!important;position:relative;
+}
+.case-card:hover{transform:translateY(-2px) scale(1.01)!important;box-shadow:0 16px 40px rgba(20,40,30,.18)!important;border:none!important}
+.case-thumb{aspect-ratio:16/10!important;position:relative}
+.case-thumb img{transition:transform .5s cubic-bezier(.2,.8,.2,1)!important}
+.case-card:hover .case-thumb img{transform:scale(1.06)!important}
+.case-thumb-overlay{
+  background:linear-gradient(180deg,transparent 35%,rgba(8,20,14,.82) 100%)!important;
+  opacity:1!important;align-items:flex-end!important;justify-content:flex-start!important;
+  padding:24px!important;
+}
+.case-thumb-overlay span{display:none}
+.case-thumb::before{
+  content:'';position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center;z-index:3;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s;
+}
+.case-card:hover .case-thumb::before{transform:rotate(45deg) scale(1.08);background:rgba(255,255,255,.28)}
+.case-thumb::after{
+  content:'↗';position:absolute;top:18px;right:18px;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;z-index:4;
+  pointer-events:none;transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.case-card:hover .case-thumb::after{transform:rotate(45deg)}
+.case-body{
+  position:absolute!important;inset:0;display:flex!important;flex-direction:column!important;
+  justify-content:flex-end!important;padding:24px!important;z-index:2;pointer-events:none;
+}
+.case-cat{color:#bbf7d0!important;font-size:9px!important;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.case-client{color:#fff!important;font-size:19px!important;font-weight:400!important;margin-bottom:3px!important;line-height:1.2}
+.case-title{color:rgba(255,255,255,.72)!important;font-size:11px!important}
+.case-challenge-preview,.case-footer{display:none!important}
+.cases-grid{gap:18px!important}
+
+@media(max-width:640px){
+  .case-thumb{aspect-ratio:4/3!important}
+  .case-client{font-size:16px!important}
+}
+
+/* Mai Nguyễn name colors + responsive tagline */
+.hero-name-lg{color:var(--black)}
+.hero-name-lg em{font-style:italic;color:var(--leaf);font-weight:300}
+.hero-sub-full{display:inline}
+.hero-sub-short{display:none}
+@media(max-width:640px){
+  .hero-sub-full{display:none}
+  .hero-sub-short{display:inline}
+}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.13/lenis.min.js"></script>
 </head>
 <body>
 <!-- NAV -->
@@ -821,27 +896,21 @@ section{padding:100px 60px}
 </div>
 <section id="about">
  <div class="hero-photo-wrap reveal">
- <img src="https://lh3.googleusercontent.com/d/1wKi-egd8q1Q2TfLrvLXmsYnS6rdYdU3c" alt="Nguyễn Cẩm Tú Mai" style="width:180px;height:180px;border-radius:50%;object-fit:cover;object-position:center top;box-shadow:0 12px 40px rgba(34,139,34,.15);border:3px solid rgba(255,255,255,.9);">
+ <img src="https://lh3.googleusercontent.com/d/1wKi-egd8q1Q2TfLrvLXmsYnS6rdYdU3c" alt="Nguyễn Cẩm Tú Mai" style="width:140px;height:140px;border-radius:50%;object-fit:cover;object-position:center top;box-shadow:0 12px 40px rgba(34,139,34,.15);border:3px solid rgba(255,255,255,.9);">
  </div>
  <div class="reveal reveal-delay-1">
  <div class="hero-tag">Portfolio</div>
  </div>
- <h1 class="hero-name reveal reveal-delay-1">Nguyễn <em>Cẩm Tú Mai</em></h1>
- <p class="hero-belief reveal reveal-delay-2">
- <span class="hero-belief-intro" style="color:#9ca3af">Seven years with over thirty clients across categories has sharpened one clear belief:</span><br class="hero-belief-intro">
- <span><strong style="color:#374151">Strategic planning is an </strong><strong style="color:#be185d">act of focus</strong><span style="color:#374151"> — cut the noise, find the tension worth leaning into, and go all in.</span></span>
+ <h1 class="hero-name-lg reveal reveal-delay-1" data-split-text><em>Mai</em> Nguyễn</h1>
+ <p class="hero-sub-lg reveal reveal-delay-2">
+   <span class="hero-sub-full">Seven years with over thirty clients across categories has sharpened one clear belief: Strategic planning is an <strong style="color:#be185d;font-weight:600">act of focus</strong> — cut the noise, find the tension worth leaning into, and go all in.</span>
+   <span class="hero-sub-short">Strategic Planning Manager — seven years sharpening one belief: <strong style="color:#be185d;font-weight:600">focus cuts through noise.</strong></span>
  </p>
- <div class="hero-stats reveal reveal-delay-2">
- <div class="hero-stat">
- <div class="hero-stat-num">7+</div>
- <div class="hero-stat-label">Years experience</div>
+ <div class="hero-meta-row reveal reveal-delay-3">
+ <div class="hero-meta-item"><span class="hero-meta-num">7+</span><span class="hero-meta-label">Years</span></div>
+ <div class="hero-scroll-hint">Scroll to explore</div>
+ <div class="hero-meta-item" style="text-align:right"><span class="hero-meta-num">30+</span><span class="hero-meta-label">Clients</span></div>
  </div>
- <div class="hero-stat">
- <div class="hero-stat-num">30+</div>
- <div class="hero-stat-label">Clients across categories</div>
- </div>
- </div>
- <a href="#cases" class="hero-cta reveal reveal-delay-3">Get to know me →</a>
  <div class="hero-divider"></div>
 </section>
 <section id="experiences">
@@ -1693,6 +1762,108 @@ function closeLightbox(){
  document.body.style.overflow='';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();}});
+
+/* ═══ LUKE BAFFAIT INSPIRED MOTION LAYER ═══ */
+(function(){
+  // Respect reduced-motion preference
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return;
+  if(typeof gsap === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // 1. Lenis smooth scroll
+  let lenis;
+  if(typeof Lenis !== 'undefined'){
+    lenis = new Lenis({ duration: 1.1, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // 2. Hero name split-text reveal (char by char)
+  document.querySelectorAll('[data-split-text]').forEach(el=>{
+    const text = el.innerHTML;
+    // Split top-level text + preserve <em> tag
+    const wrapper = document.createElement('span');
+    wrapper.innerHTML = text;
+    const walk = (node) => {
+      if(node.nodeType === 3){
+        const frag = document.createDocumentFragment();
+        node.textContent.split('').forEach(ch=>{
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.textContent = ch;
+          span.style.opacity = '0';
+          span.style.transform = 'translateY(28px)';
+          frag.appendChild(span);
+        });
+        node.parentNode.replaceChild(frag, node);
+      } else if(node.nodeType === 1){
+        Array.from(node.childNodes).forEach(walk);
+      }
+    };
+    Array.from(wrapper.childNodes).forEach(walk);
+    el.innerHTML = '';
+    el.appendChild(wrapper);
+
+    gsap.to(el.querySelectorAll('.char'), {
+      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+      stagger: 0.025, delay: 0.15
+    });
+  });
+
+  // 3. Case cards — scroll-triggered fade-up + scale
+  gsap.utils.toArray('.case-card').forEach((card, i) => {
+    gsap.fromTo(card,
+      { opacity: 0, y: 36, scale: 0.96 },
+      {
+        opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 92%', toggleActions: 'play none none none' }
+      }
+    );
+  });
+
+  // 4. IP / OW / MAC cards — same treatment
+  gsap.utils.toArray('.ip2-card, .ow2-card, .mac2-card').forEach((card) => {
+    gsap.fromTo(card,
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+        scrollTrigger: { trigger: card, start: 'top 94%', toggleActions: 'play none none none' } }
+    );
+  });
+
+  // 5. Section eyebrows — subtle letter-spacing reveal
+  gsap.utils.toArray('.section-eyebrow, .section-eyebrow-cases').forEach(el=>{
+    gsap.fromTo(el, { opacity: 0, letterSpacing: '0.4em' }, {
+      opacity: 1, letterSpacing: '0.18em', duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%' }
+    });
+  });
+
+  // 6. Hero meta row — count-up style reveal
+  gsap.fromTo('.hero-meta-row', { opacity: 0, y: 16 }, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.6
+  });
+
+  // 7. Magnetic effect on case-thumb arrow button (desktop only)
+  if(window.matchMedia('(hover:hover)').matches){
+    document.querySelectorAll('.case-card').forEach(card=>{
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width/2) / r.width;
+        const y = (e.clientY - r.top - r.height/2) / r.height;
+        gsap.to(card, { x: x*6, y: y*6, duration: 0.4, ease: 'power2.out', overwrite:'auto' });
+      });
+      card.addEventListener('mouseleave', ()=>{
+        gsap.to(card, { x: 0, y: 0, duration: 0.5, ease: 'power3.out' });
+      });
+    });
+  }
+
+  // Refresh ScrollTrigger after images load (layout shifts)
+  window.addEventListener('load', ()=> ScrollTrigger.refresh());
+})();
 </script>
 <!-- ── CASE STUDY MODAL ── -->
 <div class="modal-overlay" id="caseModal" onclick="if(event.target===this)closeModal()">
